@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
-import { marked } from "marked";
+import MDEditor from '@uiw/react-md-editor';
+import { useState } from 'react';
 
-/** Live markdown editor with preview */
-export default function Editor() {
-  const [text, setText] = useState('');
-  return (
-    <div className="editor">
-      <textarea value={text} onChange={e => setText(e.target.value)} />
-      <div className="preview" dangerouslySetInnerHTML={{ __html: marked.parse(text) }} />
-    </div>
-  );
+interface Props {
+  initial?: string;
+  onChange?: (value: string) => void;
+}
+
+/** Markdown editor with live preview */
+export default function Editor({ initial = '', onChange }: Props) {
+  const [value, setValue] = useState(initial);
+  const handle = (val?: string) => {
+    const v = val || '';
+    setValue(v);
+    onChange?.(v);
+  };
+  return <MDEditor height={400} value={value} onChange={handle} />;
 }

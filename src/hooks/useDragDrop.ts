@@ -1,18 +1,22 @@
 import { useEffect } from 'react';
 
 /**
- * Handle drag and drop for text, urls and files
- * @param onDrop called with dropped url or file path
+ * Hook to capture drag&drop of text, images, files and URLs.
+ * Calls onDrop with the dropped string or file path.
  */
 export default function useDragDrop(onDrop: (data: string) => void) {
   useEffect(() => {
-    function handle(e: DragEvent) {
+    const handle = (e: DragEvent) => {
       e.preventDefault();
       const dt = e.dataTransfer;
       if (!dt) return;
-      const url = dt.getData('text/uri-list') || dt.getData('text/plain');
-      if (url) onDrop(url);
-    }
+      if (dt.files && dt.files.length > 0) {
+        for (const f of Array.from(dt.files)) onDrop(f.path);
+        return;
+      }
+      const text = dt.getData('text/uri-list') || dt.getData('text/plain');
+      if (text) onDrop(text);
+    };
     window.addEventListener('drop', handle);
     window.addEventListener('dragover', e => e.preventDefault());
     return () => {
