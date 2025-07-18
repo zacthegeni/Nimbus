@@ -1,23 +1,33 @@
 # Nimbus
 
-Minimal cross-platform note taking app built with Electron and React.
+Nimbus is a minimal yet delightful note‑taking application built with Electron and React. Notes are stored locally in a SQLite database and edited with a live Markdown preview.
 
-## Development
+## Installation & Usage
 
-```bash
-npm install # may require internet access
-npm run dev
-```
-
-## Build
+### Development
 
 ```bash
-npm run build
+npm install
+npm run dev        # starts Vite and Electron
 ```
 
-## Test
+### Building
 
 ```bash
-npm test
-npm run test:e2e
+npm run build      # builds renderer and packages app
 ```
+
+### Running Tests
+
+```bash
+npm test           # unit tests
+npm run test:e2e   # Playwright end‑to‑end tests
+```
+
+### Installing
+
+The packaged files are output to the `dist/` directory.
+
+- **macOS**: open the `.dmg` and drag Nimbus to Applications.
+- **Windows**: run the generated `.exe` installer.
+- **Linux**: make the `.AppImage` executable and run it.

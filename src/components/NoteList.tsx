@@ -1,11 +1,22 @@
-import React from 'react';
+import useNotes from '../hooks/useNotes';
 
-interface Props { notes: string[] }
+interface Props {
+  onSelect: (id: string) => void;
+}
 
-export default function NoteList({ notes }: Props) {
+export default function NoteList({ onSelect }: Props) {
+  const { notes } = useNotes();
   return (
-    <ul className="note-list">
-      {notes.map((n, i) => <li key={i}>{n}</li>)}
+    <ul className="overflow-y-auto">
+      {notes.map(n => (
+        <li
+          key={n.id}
+          className="p-2 border-b cursor-pointer hover:bg-slate-100"
+          onClick={() => onSelect(n.id)}
+        >
+          {n.title || 'Untitled'}
+        </li>
+      ))}
     </ul>
   );
 }
